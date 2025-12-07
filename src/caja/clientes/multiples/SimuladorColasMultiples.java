@@ -18,7 +18,8 @@ public class SimuladorColasMultiples {
         }
 
         // Registro de tiempos de espera
-        List<Long> tiempos = new ArrayList<>();
+        List<Long> tiemposespera = new ArrayList<>();
+        List<Long> tiemposcompra = new ArrayList<>();
 
         Thread[] clientes = new Thread[numClientes];
 
@@ -27,33 +28,26 @@ public class SimuladorColasMultiples {
             CajaPorCliente cajaElegida = cajas[i % numCajas];
 
             clientes[i] = new Thread(
-                    new ClientePorCaja(cajaElegida, tiempos),
-                    "Cliente " + i
+                    new ClientePorCaja(cajaElegida, tiemposespera, tiemposcompra), "Cliente " + i
             );
 
             clientes[i].start();
 
             try {
                 Thread.sleep(20);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            } catch (InterruptedException e) {}
         }
 
         // Esperar a que todos terminen
         for (Thread cliente : clientes) {
             try {
                 cliente.join();
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
+            } catch (InterruptedException e) {}
         }
 
         System.out.println("MercaTrola cierra sus puertas.");
 
-        // Mostrar tiempos registrados
-        System.out.println("\n--- TIEMPOS REGISTRADOS ---");
-        tiempos.forEach(System.out::println);
+
     }
 
     public static void main(String[] args) {

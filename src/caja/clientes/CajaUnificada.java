@@ -43,17 +43,19 @@ public class CajaUnificada {
             e.printStackTrace();
         }
 
+
         Mediaydesvi calculo = new Mediaydesvi();
         System.out.println();
         long media = (long) calculo.calcularmedia(esperaslista);
         System.out.println("Tiempo medio de espera : " + media + "ms");
         long desviacion = calculo.calculardesviacion(esperaslista);
         System.out.println("Desviacion tipica : " + desviacion + "ms");
+
+
+
     }
 
     public static void main(String[] args) {
         colas(30, 10);
     }
 }
-
-

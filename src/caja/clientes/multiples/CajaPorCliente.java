@@ -1,9 +1,9 @@
 package caja.clientes.multiples;
 
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
-// Clase que representa una única caja con su propia cola en la que solo se atiende a 1 cliente a la vez.
 public class CajaPorCliente {
     private final int idCaja;
     private final Semaphore cola;
@@ -11,26 +11,46 @@ public class CajaPorCliente {
 
     public CajaPorCliente(int idCaja) {
         this.idCaja = idCaja;
-        this.cola  = new Semaphore(1, true); // Semáforo justo para evitar inanición.
+        this.cola  = new Semaphore(1, true); // semáforo justo
     }
 
-    public void atenderClientes(String nombreCliente){
-       try {
-           // El cliente entra en la cola.
-           cola.acquire();
+    // Ahora recibe listas para guardar tiempos
+    public void atenderClientes(String nombreCliente, List<Long> esperas, List<Long> tiemposCompra) {
+        long llegada = System.currentTimeMillis();
 
-           System.out.printf("%s está siendo atendido en la caja %d%n", nombreCliente, idCaja);
+        try {
+            // Espera para entrar en la caja
+            cola.acquire();
+            long inicioAtencion = System.currentTimeMillis();
 
-           // Espera para simular la compra.
-           Thread.sleep(100 + rnd.nextInt(500));
+            long tiempoEspera = inicioAtencion - llegada;
 
-           System.out.printf("%s ha terminado en la caja %d%n", nombreCliente, idCaja);
-       } catch (InterruptedException e ) {
-           Thread.currentThread().interrupt();
-           throw new RuntimeException(e);
-       } finally {
-           // Libera la caja para el siguiente cliente.
-           cola.release();
-       }
+            // Guardamos tiempo de espera
+            synchronized (esperas) {
+                esperas.add(tiempoEspera);
+            }
+
+            System.out.printf("%s está siendo atendido en la caja %d (esperó %d ms)%n", nombreCliente, idCaja, tiempoEspera);
+
+            // Simular tiempo de atención / compra
+            long inicioCompra = System.currentTimeMillis();
+            Thread.sleep(100 + rnd.nextInt(500));
+            long finCompra = System.currentTimeMillis();
+
+            long tiempoCompra = finCompra - inicioCompra;
+
+            // Guardamos tiempo de compra
+            synchronized (tiemposCompra) {
+                tiemposCompra.add(tiempoCompra);
+            }
+
+            System.out.printf("%s ha terminado en la caja %d (compra %d ms)%n", nombreCliente, idCaja, tiempoCompra);
+
+        } catch (InterruptedException e ) {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(e);
+        } finally {
+            cola.release();
+        }
     }
 }

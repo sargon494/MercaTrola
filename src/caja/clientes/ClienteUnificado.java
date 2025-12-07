@@ -7,12 +7,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ClienteUnificado implements Runnable {
 
     private Semaphore cola;
-    private final List<Long> tiempos;
+    private List<Long> tiempos;
     private AtomicBoolean[] cajas;
     private int cajaAsignada = 0;
     private List<Long> esperas;
 
-    public ClienteUnificado(Semaphore cola, List<Long> tiempos,List<Long> esperas, AtomicBoolean[] cajas) {
+    public ClienteUnificado(Semaphore cola, List<Long> tiempos, List<Long> esperas, AtomicBoolean[] cajas) {
         this.cola = cola;
         this.tiempos = tiempos;
         this.cajas = cajas;
@@ -34,6 +34,7 @@ public class ClienteUnificado implements Runnable {
             synchronized (esperas){
                 esperas.add(tespera);
             }
+
             for (int i = 0; i < cajas.length; i++) {
                 if (cajas[i].compareAndSet(true, false)) {
                     cajaAsignada = i;

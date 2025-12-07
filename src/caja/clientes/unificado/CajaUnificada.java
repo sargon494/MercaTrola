@@ -14,17 +14,17 @@ public class CajaUnificada {
 
     public void colas(int numClientes, int numCajas) {
 
-        // Semáforo: permite hasta "numCajas" clientes simultáneos
+        // Semáforo: permite que como máximo numCajas clientes estén siendo atendidos a la vez
         Semaphore cola = new Semaphore(numCajas);
 
-        // Array de cajas libres/ocupadas con AtomicBoolean
+        // Cada posición representa una caja libre/ocupada
         AtomicBoolean[] cajasLibres = new AtomicBoolean[numCajas];
         for (int i = 0; i < numCajas; i++) {
-            cajasLibres[i] = new AtomicBoolean(true); // todas las cajas comienzan libres
+            cajasLibres[i] = new AtomicBoolean(true); // True indica caja libre
         }
 
-        List<Long> tiempos = new ArrayList<>();
-        List<Long> esperaslista = new ArrayList<>();
+        List<Long> tiempos = new ArrayList<>();      // Tiempos siendo atendido
+        List<Long> esperaslista = new ArrayList<>(); // Tiempos esperando en la cola unificada
 
         Thread[] clientes = new Thread[numClientes];
 
@@ -32,12 +32,13 @@ public class CajaUnificada {
 
         try {
             for (int i = 0; i < numClientes; i++) {
+                // Cada cliente recibe el semáforo + listas compartidas + array de cajas
                 clientes[i] = new Thread(new ClienteUnificado(cola, tiempos, esperaslista , cajasLibres), "Cliente " + i);
                 clientes[i].start();
-                Thread.sleep(50);
+                Thread.sleep(50); // Pequeña pausa para simular llegadas intermitentes
             }
 
-            // Esperar a que terminen todos
+            // join() asegura que todas las simulaciones de clientes acaben antes de calcular estadísticas
             for (Thread cliente : clientes) {
                 cliente.join();
             }
@@ -48,18 +49,17 @@ public class CajaUnificada {
             e.printStackTrace();
         }
 
-
+        // Cálculo estadístico externo
         Mediaydesvi calculo = new Mediaydesvi();
+
         System.out.println();
-        media = (long) calculo.calcularmedia(esperaslista);
+        media = (long) calculo.calcularmedia(esperaslista); // Media del tiempo de espera en cola
         System.out.println("Tiempo medio de espera : " + media + "ms");
-        desviacion = calculo.calculardesviacion(esperaslista);
+
+        desviacion = calculo.calculardesviacion(esperaslista); // Desviación típica del tiempo de espera
         System.out.println("Desviacion tipica : " + desviacion + "ms");
         System.out.println();
-
-
     }
-
 
     public long getMedia() {
         return media;

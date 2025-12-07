@@ -101,7 +101,7 @@ public class Main {
                     }
 
                 case 5:
-                    System.out.println("Saliendo");
+                    System.out.println("Saliendo...");
                     System.exit(0);
 
                 default:

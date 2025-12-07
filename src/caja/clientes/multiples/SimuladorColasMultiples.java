@@ -18,12 +18,12 @@ public class SimuladorColasMultiples {
         CajaPorCliente[] cajas = new CajaPorCliente[numCajas];
 
         for (int i = 0; i < numCajas; i++) {
-            cajas[i] = new CajaPorCliente(i);
+            cajas[i] = new CajaPorCliente(i); // Cada caja tiene su propio semáforo
         }
 
         // Registro de tiempos de espera
-        List<Long> tiemposespera = new ArrayList<>();
-        List<Long> tiemposcompra = new ArrayList<>();
+        List<Long> tiemposespera = new ArrayList<>(); // Esperas antes de entrar a su caja
+        List<Long> tiemposcompra = new ArrayList<>(); // Tiempos siendo atendidos
 
         Thread[] clientes = new Thread[numClientes];
 
@@ -35,7 +35,7 @@ public class SimuladorColasMultiples {
             clientes[i].start();
 
             try {
-                Thread.sleep(20);
+                Thread.sleep(50); // Pequeña pausa para simular llegadas intermitentes
             } catch (InterruptedException e) {}
         }
 
@@ -49,6 +49,7 @@ public class SimuladorColasMultiples {
         System.out.println("MercaTrola cierra sus puertas.");
         System.out.println();
 
+        // Cálculo de media y desviación sobre los tiempos de espera
         Mediaydesvi datosmedia = new Mediaydesvi();
         media = datosmedia.calcularmedia(tiemposespera);
         System.out.println("Tiempo medio de espera : " + media + "ms");

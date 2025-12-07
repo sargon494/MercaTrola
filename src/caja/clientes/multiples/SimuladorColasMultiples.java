@@ -1,4 +1,4 @@
-package caja.clientes;
+package caja.clientes.multiples;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +35,18 @@ public class SimuladorColasMultiples {
 
             try {
                 Thread.sleep(20);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         // Esperar a que todos terminen
         for (Thread cliente : clientes) {
             try {
                 cliente.join();
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         System.out.println("MercaTrola cierra sus puertas.");

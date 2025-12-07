@@ -1,4 +1,4 @@
-package caja.clientes;
+package caja.clientes.multiples;
 
 import java.util.List;
 

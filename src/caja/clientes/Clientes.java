@@ -1,5 +1,7 @@
 package caja.clientes;
 
+import caja.clientes.multiples.CajaPorCliente;
+
 import java.util.concurrent.Semaphore;
 
 public class Clientes{

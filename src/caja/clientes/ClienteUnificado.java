@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class ClienteUnificado implements Runnable {
 
     private Semaphore cola;
-    private List<Long> tiempos;
+    private final List<Long> tiempos;
     private AtomicBoolean[] cajas;
     private int cajaAsignada = 0;
 

@@ -19,6 +19,7 @@ public class CajaUnificada {
         }
 
         List<Long> tiempos = new ArrayList<>();
+        List<Long> esperaslista = new ArrayList<>();
 
         Thread[] clientes = new Thread[numClientes];
 
@@ -26,10 +27,7 @@ public class CajaUnificada {
 
         try {
             for (int i = 0; i < numClientes; i++) {
-                clientes[i] = new Thread(
-                        new ClienteUnificado(cola, tiempos, cajasLibres),
-                        "Cliente " + i
-                );
+                clientes[i] = new Thread(new ClienteUnificado(cola, tiempos, esperaslista , cajasLibres), "Cliente " + i);
                 clientes[i].start();
                 Thread.sleep(50);
             }
@@ -45,9 +43,16 @@ public class CajaUnificada {
             e.printStackTrace();
         }
 
-        // Mostrar tiempos
-        System.out.println("\n--- TIEMPOS REGISTRADOS ---");
-        tiempos.forEach(System.out::println);
+
+        Mediaydesvi calculo = new Mediaydesvi();
+        System.out.println();
+        long media = (long) calculo.calcularmedia(esperaslista);
+        System.out.println("Tiempo medio de espera : " + media + "ms");
+        long desviacion = calculo.calculardesviacion(esperaslista);
+        System.out.println("Desviacion tipica : " + desviacion + "ms");
+
+
+
     }
 
     public static void main(String[] args) {

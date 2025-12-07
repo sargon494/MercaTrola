@@ -51,7 +51,7 @@ public class Main {
                     cu.colas(500,10);
                     long mediaUni = cu.getMedia();
 
-                    if (mediaMultiples > mediaUni) {
+                    if (mediaMultiples < mediaUni) {
                         System.out.println("El sistema de múltiples colas es más eficiente que el de una cola unificada.");
                     } else {
                         System.out.println("El sistema de una cola unificada es más eficiente que el de múltiples colas");
@@ -94,11 +94,12 @@ public class Main {
                     System.out.println(totalMediasMultiples);
                     System.out.println(totalMediasUnificadas);
 
-                    if (MM > MU) {
+                    if (MM < MU) {
                         System.out.println("La cola múltiple ha resultado más eficiente tras 50 iteraciones");
                     } else {
                         System.out.println("La cola unificada ha resultado más eficiente tras 50 iteraciones");
                     }
+                    break;
 
                 case 5:
                     System.out.println("Saliendo...");

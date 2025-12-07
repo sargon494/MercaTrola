@@ -24,7 +24,7 @@ public class Mediaydesvi {
             suma += Math.pow(l - media , 2);
         }
 
-        return (long) Math.sqrt(suma / largo);
+        return (long) Math.sqrt(suma/largo);
     }
 }
 

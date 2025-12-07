@@ -29,7 +29,7 @@ public class CajaPorCliente {
            Thread.currentThread().interrupt();
            throw new RuntimeException(e);
        } finally {
-           // Libera la caja para el siguiente cliente.
+           // Libera la caja para el siguiente cliente
            cola.release();
        }
     }

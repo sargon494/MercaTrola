@@ -1,4 +1,6 @@
-package caja.clientes;
+package caja.clientes.unificado;
+
+import caja.clientes.Mediaydesvi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +9,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CajaUnificada {
 
-    public static void colas(int numClientes, int numCajas) {
+    private long media;
+    private long desviacion;
+
+    public void colas(int numClientes, int numCajas) {
 
         // Semáforo: permite hasta "numCajas" clientes simultáneos
         Semaphore cola = new Semaphore(numCajas);
@@ -46,16 +51,21 @@ public class CajaUnificada {
 
         Mediaydesvi calculo = new Mediaydesvi();
         System.out.println();
-        long media = (long) calculo.calcularmedia(esperaslista);
+        media = (long) calculo.calcularmedia(esperaslista);
         System.out.println("Tiempo medio de espera : " + media + "ms");
-        long desviacion = calculo.calculardesviacion(esperaslista);
+        desviacion = calculo.calculardesviacion(esperaslista);
         System.out.println("Desviacion tipica : " + desviacion + "ms");
-
+        System.out.println();
 
 
     }
 
-    public static void main(String[] args) {
-        colas(30, 10);
+
+    public long getMedia() {
+        return media;
+    }
+
+    public long getDesviacion() {
+        return desviacion;
     }
 }

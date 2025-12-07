@@ -7,8 +7,10 @@ import java.util.List;
 
 // Clase que realiza la simulación de varias cajas con su propia cola independiente.
 public class SimuladorColasMultiples {
+    private long media;
+    private long desviacion;
 
-    public static void simular(int numClientes, int numCajas) {
+    public  void simular(int numClientes, int numCajas) {
 
         System.out.println("MercaTrola abre sus puertas.");
 
@@ -48,15 +50,20 @@ public class SimuladorColasMultiples {
         System.out.println();
 
         Mediaydesvi datosmedia = new Mediaydesvi();
-        long media = datosmedia.calcularmedia(tiemposespera);
+        media = datosmedia.calcularmedia(tiemposespera);
         System.out.println("Tiempo medio de espera : " + media + "ms");
-        long desvi = datosmedia.calculardesviacion(tiemposespera);
-        System.out.println("Desviacion tipica : " + desvi + "ms");
-
+        desviacion = datosmedia.calculardesviacion(tiemposespera);
+        System.out.println("Desviacion tipica : " + desviacion + "ms");
+        System.out.println();
 
     }
 
-    public static void main(String[] args) {
-        simular(30, 10);
+    public long getMedia() {
+        return media;
     }
+
+    public long getDesviacion() {
+        return desviacion;
+    }
+
 }

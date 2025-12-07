@@ -1,4 +1,4 @@
-package caja.clientes;
+package caja.clientes.unificado;
 
 import java.util.List;
 import java.util.concurrent.Semaphore;

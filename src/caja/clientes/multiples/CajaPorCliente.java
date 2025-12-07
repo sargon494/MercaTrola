@@ -30,7 +30,7 @@ public class CajaPorCliente {
                 esperas.add(tiempoEspera);
             }
 
-            System.out.printf("%s está siendo atendido en la caja %d (esperó %d ms)%n", nombreCliente, idCaja, tiempoEspera);
+            System.out.printf("%s está siendo atendido en la caja %d %n", nombreCliente, idCaja);
 
             // Simular tiempo de atención / compra
             long inicioCompra = System.currentTimeMillis();
@@ -44,7 +44,7 @@ public class CajaPorCliente {
                 tiemposCompra.add(tiempoCompra);
             }
 
-            System.out.printf("%s ha terminado en la caja %d (compra %d ms)%n", nombreCliente, idCaja, tiempoCompra);
+            System.out.printf("%s ha terminado en la caja %d (esperó %d ms)%n", nombreCliente, idCaja, tiempoEspera);
 
         } catch (InterruptedException e ) {
             Thread.currentThread().interrupt();

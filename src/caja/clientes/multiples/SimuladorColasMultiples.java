@@ -1,5 +1,7 @@
 package caja.clientes.multiples;
 
+import caja.clientes.Mediaydesvi;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +28,8 @@ public class SimuladorColasMultiples {
         // Asignación de clientes en cajas.
         for (int i = 0; i < numClientes; i++) {
             CajaPorCliente cajaElegida = cajas[i % numCajas];
-
             clientes[i] = new Thread(
-                    new ClientePorCaja(cajaElegida, tiemposespera, tiemposcompra), "Cliente " + i
-            );
-
+                    new ClientePorCaja(cajaElegida, tiemposespera, tiemposcompra), "Cliente " + i);
             clientes[i].start();
 
             try {
@@ -46,6 +45,13 @@ public class SimuladorColasMultiples {
         }
 
         System.out.println("MercaTrola cierra sus puertas.");
+        System.out.println();
+
+        Mediaydesvi datosmedia = new Mediaydesvi();
+        long media = datosmedia.calcularmedia(tiemposespera);
+        System.out.println("Tiempo medio de espera : " + media + "ms");
+        long desvi = datosmedia.calculardesviacion(tiemposespera);
+        System.out.println("Desviacion tipica : " + desvi + "ms");
 
 
     }
